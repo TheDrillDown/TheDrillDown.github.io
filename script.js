@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
           episodeLink.id = "episodeLink";
           episodeLink.target = "_blank";
           episodeLink.textContent =
-            "See episode details and slide deck on GitHub";
+            "See episode summary and slide deck on GitHub";
           videoPlayer.insertAdjacentElement("afterend", episodeLink);
         }
         episodeLink.href = video.release_url;
