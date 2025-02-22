@@ -79,6 +79,16 @@ video {
   background-color: #d3c886;
 }
 
+/* Style for the episode link */
+#episodeLink {
+  color: #08524d; /* Same color as the body text */
+  text-decoration: none; /* Remove underline */
+}
+
+#episodeLink:hover {
+  text-decoration: underline; /* Underline on hover */
+}
+
 /* Media query for landscape orientation */
 @media (orientation: landscape) {
   .container {

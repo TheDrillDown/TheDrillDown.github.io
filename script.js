@@ -46,6 +46,18 @@ document.addEventListener("DOMContentLoaded", () => {
         videoPlayer.play().catch((error) => {
           console.error("Error playing video:", error); // Error handling
         });
+
+        // Create and append the link to the GitHub Release
+        let episodeLink = document.getElementById("episodeLink");
+        if (!episodeLink) {
+          episodeLink = document.createElement("a");
+          episodeLink.id = "episodeLink";
+          episodeLink.target = "_blank";
+          episodeLink.textContent =
+            "See episode details and slide deck on GitHub";
+          videoPlayer.insertAdjacentElement("afterend", episodeLink);
+        }
+        episodeLink.href = video.release_url;
       });
       playlist.appendChild(li);
     });
@@ -62,6 +74,11 @@ document.addEventListener("DOMContentLoaded", () => {
           url: asset.browser_download_url,
           published_at: release.published_at,
         }))
+        // add the html_url property from the release to the video object
+        .map((video) => {
+          video.release_url = release.html_url;
+          return video;
+        })
     );
     console.log("Fetched videos:", videos); // Debugging line
     const sortedVideos = sortVideos(isAscending);
