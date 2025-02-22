@@ -1,0 +1,114 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #fdfbec;
+  margin: 0;
+  padding: 0;
+  color: #08524d; /* Set text color */
+}
+
+.container {
+  width: 100%; /* Make container take full width */
+  max-width: 100%; /* Ensure container does not exceed full width */
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fdfbec;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column; /* Change to column layout */
+  gap: 20px;
+  box-sizing: border-box; /* Include padding in the element's total width and height */
+}
+
+#bannerContainer {
+  text-align: center; /* Center the banner image */
+}
+
+#bannerContainer img {
+  max-width: 100%;
+  height: auto;
+}
+
+h1 {
+  text-align: center;
+  width: 100%;
+}
+
+#search {
+  width: 90%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 10px;
+  margin: 5px;
+}
+
+video {
+  width: 100%; /* Ensure video takes full width */
+  margin-bottom: 10px;
+  box-sizing: border-box; /* Include padding in the element's total width and height */
+}
+
+#videoContainer {
+  flex: none; /* Reset flex property */
+}
+
+#playlistContainer {
+  width: 100%; /* Ensure playlist container takes full width */
+  max-width: 100%; /* Ensure playlist container does not exceed full width */
+  flex: none; /* Reset flex property */
+  display: block; /* Change to block layout */
+  box-sizing: border-box; /* Include padding in the element's total width and height */
+}
+
+#playlist {
+  list-style: none;
+  padding: 0;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+#playlist li {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #ccc;
+}
+
+#playlist li:hover {
+  background-color: #d3c886;
+}
+
+/* Media query for landscape orientation */
+@media (orientation: landscape) {
+  .container {
+    flex-direction: row; /* Change to row layout */
+  }
+
+  #videoContainer {
+    align-items: center; /* Center content vertically */
+    width: 75%;
+    height: 100%;
+  }
+
+  #playlistContainer {
+    width: 25%;
+    padding-right: 10px;
+  }
+}
+
+/* Media query for portrait orientation */
+@media (orientation: portrait) {
+  .container {
+    flex-direction: column; /* Change to column layout */
+  }
+
+  #videoContainer {
+    flex: none; /* Reset flex property */
+  }
+
+  #playlistContainer {
+    flex: none; /* Reset flex property */
+    max-width: 100%; /* Ensure playlist container takes full width */
+  }
+}

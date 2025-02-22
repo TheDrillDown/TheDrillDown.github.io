@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Drill Down with Ahmad & James</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="bannerContainer">
+      <img
+        src="thedrilldown_banner.png"
+        alt="The Drill Down with Ahmad & James"
+      />
+    </div>
+    <div class="container">
+      <div id="videoContainer">
+        <video id="videoPlayer" controls>
+          <source id="videoSource" src="" type="video/mp4" />
+          Your browser does not support the video tag or the video could not be
+          loaded.
+        </video>
+      </div>
+      <div id="playlistContainer">
+        <input type="text" id="search" placeholder="Search..." />
+        <button id="sortToggle">Sort Descending</button>
+        <ul id="playlist"></ul>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
