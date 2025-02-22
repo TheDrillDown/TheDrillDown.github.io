@@ -1,9 +1,21 @@
+/* Define CSS variables for colors */
+:root {
+  --background-color: #fdfbec;
+  --text-color: #08524d;
+  --hover-color: #d3c886;
+  --border-color: #ccc;
+}
+
 body {
   font-family: Arial, sans-serif; /* Set font family */
-  background-color: #fdfbec; /* Set background color */
+  background-color: var(
+    --background-color
+  ); /* Use variable for background color */
   margin: 0; /* Remove default margin */
   padding: 0; /* Remove default padding */
-  color: #08524d; /* Set text color */
+  color: var(--text-color); /* Use variable for text color */
+  scrollbar-width: thin; /* Firefox: Make scrollbar thin */
+  scrollbar-color: var(--hover-color) transparent; /* Firefox: Set scrollbar color */
 }
 
 .container {
@@ -11,7 +23,9 @@ body {
   max-width: 100%; /* Ensure container does not exceed full width */
   margin: 0 auto; /* Center container */
   padding: 20px; /* Add padding */
-  background-color: #fdfbec; /* Set background color */
+  background-color: var(
+    --background-color
+  ); /* Use variable for background color */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow */
   display: flex; /* Use flexbox layout */
   flex-direction: column; /* Change to column layout */
@@ -72,16 +86,16 @@ video {
 #playlist li {
   padding: 10px; /* Add padding */
   cursor: pointer; /* Change cursor on hover */
-  border-bottom: 1px solid #ccc; /* Add bottom border */
+  border-bottom: 1px solid var(--border-color); /* Use variable for border color */
 }
 
 #playlist li:hover {
-  background-color: #d3c886; /* Change background color on hover */
+  background-color: var(--hover-color); /* Use variable for hover color */
 }
 
 /* Style for the episode link */
 #episodeLink {
-  color: #08524d; /* Same color as the body text */
+  color: var(--text-color); /* Use variable for text color */
   text-decoration: none; /* Remove underline */
 }
 
