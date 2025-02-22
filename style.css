@@ -1,21 +1,21 @@
 body {
-  font-family: Arial, sans-serif;
-  background-color: #fdfbec;
-  margin: 0;
-  padding: 0;
+  font-family: Arial, sans-serif; /* Set font family */
+  background-color: #fdfbec; /* Set background color */
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
   color: #08524d; /* Set text color */
 }
 
 .container {
   width: 100%; /* Make container take full width */
   max-width: 100%; /* Ensure container does not exceed full width */
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #fdfbec;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  display: flex;
+  margin: 0 auto; /* Center container */
+  padding: 20px; /* Add padding */
+  background-color: #fdfbec; /* Set background color */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow */
+  display: flex; /* Use flexbox layout */
   flex-direction: column; /* Change to column layout */
-  gap: 20px;
+  gap: 20px; /* Add space between items */
   box-sizing: border-box; /* Include padding in the element's total width and height */
 }
 
@@ -24,29 +24,29 @@ body {
 }
 
 #bannerContainer img {
-  max-width: 100%;
-  height: auto;
+  max-width: 100%; /* Ensure image takes full width */
+  height: auto; /* Maintain aspect ratio */
 }
 
 h1 {
-  text-align: center;
-  width: 100%;
+  text-align: center; /* Center align text */
+  width: 100%; /* Ensure full width */
 }
 
 #search {
-  width: 90%;
-  padding: 10px;
-  margin-bottom: 10px;
+  width: 90%; /* Set width */
+  padding: 10px; /* Add padding */
+  margin-bottom: 10px; /* Add margin below */
 }
 
 button {
-  padding: 10px;
-  margin: 5px;
+  padding: 10px; /* Add padding */
+  margin: 5px; /* Add margin */
 }
 
 video {
   width: 100%; /* Ensure video takes full width */
-  margin-bottom: 10px;
+  margin-bottom: 10px; /* Add margin below */
   box-sizing: border-box; /* Include padding in the element's total width and height */
 }
 
@@ -63,20 +63,20 @@ video {
 }
 
 #playlist {
-  list-style: none;
-  padding: 0;
-  flex-grow: 1;
-  overflow-y: auto;
+  list-style: none; /* Remove default list style */
+  padding: 0; /* Remove default padding */
+  flex-grow: 1; /* Allow to grow */
+  overflow-y: auto; /* Enable vertical scrolling */
 }
 
 #playlist li {
-  padding: 10px;
-  cursor: pointer;
-  border-bottom: 1px solid #ccc;
+  padding: 10px; /* Add padding */
+  cursor: pointer; /* Change cursor on hover */
+  border-bottom: 1px solid #ccc; /* Add bottom border */
 }
 
 #playlist li:hover {
-  background-color: #d3c886;
+  background-color: #d3c886; /* Change background color on hover */
 }
 
 /* Style for the episode link */
@@ -97,13 +97,13 @@ video {
 
   #videoContainer {
     align-items: center; /* Center content vertically */
-    width: 75%;
-    height: 100%;
+    width: 75%; /* Set width */
+    height: 100%; /* Set height */
   }
 
   #playlistContainer {
-    width: 25%;
-    padding-right: 10px;
+    width: 25%; /* Set width */
+    padding-right: 10px; /* Add padding to the right */
   }
 }
 
