@@ -37,6 +37,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Update playlist with video data
   function updatePlaylist(videos) {
+    const currentPlaying = document.querySelector("#playlist li.playing a");
+    const currentPlayingTag = currentPlaying
+      ? currentPlaying.getAttribute("href").substring(1)
+      : null;
+
     playlist.innerHTML = "";
     videos.forEach((video) => {
       const li = document.createElement("li");
@@ -52,6 +57,10 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       li.appendChild(a);
       playlist.appendChild(li);
+
+      if (video.tag_name === currentPlayingTag) {
+        li.classList.add("playing");
+      }
     });
   }
 
@@ -143,9 +152,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Event listener for sort toggle button
   sortToggleButton.addEventListener("click", () => {
+    const currentPlaying = document.querySelector("#playlist li.playing a");
+    const currentPlayingTag = currentPlaying
+      ? currentPlaying.getAttribute("href").substring(1)
+      : null;
+
     isAscending = !isAscending;
     const sortedVideos = sortVideos(isAscending);
     updatePlaylist(sortedVideos);
+
+    if (currentPlayingTag) {
+      const currentItem = Array.from(playlist.children).find((li) =>
+        li.querySelector(`a[href="#${currentPlayingTag}"]`)
+      );
+      if (currentItem) {
+        currentItem.classList.add("playing");
+      }
+    }
+
     sortToggleButton.textContent = isAscending
       ? "Sort Descending"
       : "Sort Ascending";
