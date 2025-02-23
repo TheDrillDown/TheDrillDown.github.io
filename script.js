@@ -40,6 +40,9 @@ document.addEventListener("DOMContentLoaded", () => {
     playlist.innerHTML = "";
     videos.forEach((video) => {
       const li = document.createElement("li");
+      li.addEventListener("click", () => {
+        loadVideo(video);
+      });
       const a = document.createElement("a");
       a.textContent = video.name;
       a.href = `#${video.tag_name}`;

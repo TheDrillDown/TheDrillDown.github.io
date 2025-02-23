@@ -93,6 +93,15 @@ video {
   background-color: var(--hover-color); /* Use variable for hover color */
 }
 
+#playlist a {
+  color: var(--text-color); /* Use variable for text color */
+  text-decoration: none; /* Remove underline */
+}
+
+#playlist a:hover {
+  text-decoration: underline; /* Underline on hover */
+}
+
 /* Style for the episode link */
 #episodeLink {
   color: var(--text-color); /* Use variable for text color */
