@@ -48,6 +48,9 @@ document.addEventListener("DOMContentLoaded", () => {
           console.error("Error playing video:", error); // Error handling
         });
 
+        // Update the URL with the GitHub release tag
+        window.history.pushState(null, null, `#${video.tag_name}`);
+
         // Create and append the link to the GitHub Release
         let episodeLink = document.getElementById("episodeLink");
         if (!episodeLink) {
@@ -77,6 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
           body: release.body,
           url: asset.browser_download_url,
           published_at: release.published_at,
+          tag_name: release.tag_name, // Add the tag name from the release
         }))
         // add the html_url property from the release to the video object
         .map((video) => {
@@ -86,6 +90,19 @@ document.addEventListener("DOMContentLoaded", () => {
     );
     const sortedVideos = sortVideos(isAscending);
     updatePlaylist(sortedVideos);
+
+    // Check if URL contains a tag and play the corresponding video
+    const videoTag = window.location.hash.substring(1);
+    if (videoTag) {
+      const videoToPlay = videos.find((video) => video.tag_name === videoTag);
+      if (videoToPlay) {
+        videoSource.src = videoToPlay.url;
+        videoPlayer.load();
+        videoPlayer.play().catch((error) => {
+          console.error("Error playing video:", error); // Error handling
+        });
+      }
+    }
   }
 
   // Event listener for search input
