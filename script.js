@@ -42,29 +42,33 @@ document.addEventListener("DOMContentLoaded", () => {
       const li = document.createElement("li");
       li.textContent = video.name;
       li.addEventListener("click", () => {
-        videoSource.src = video.url;
-        videoPlayer.load();
-        videoPlayer.play().catch((error) => {
-          console.error("Error playing video:", error); // Error handling
-        });
-
-        // Update the URL with the GitHub release tag
-        window.history.pushState(null, null, `#${video.tag_name}`);
-
-        // Create and append the link to the GitHub Release
-        let episodeLink = document.getElementById("episodeLink");
-        if (!episodeLink) {
-          episodeLink = document.createElement("a");
-          episodeLink.id = "episodeLink";
-          episodeLink.target = "_blank";
-          episodeLink.textContent =
-            "See episode summary and slide deck on GitHub";
-          videoPlayer.insertAdjacentElement("afterend", episodeLink);
-        }
-        episodeLink.href = video.release_url;
+        loadVideo(video);
       });
       playlist.appendChild(li);
     });
+  }
+
+  // Load video and update the episode link
+  function loadVideo(video) {
+    videoSource.src = video.url;
+    videoPlayer.load();
+    videoPlayer.play().catch((error) => {
+      console.error("Error playing video:", error); // Error handling
+    });
+
+    // Update the URL with the GitHub release tag
+    window.history.pushState(null, null, `#${video.tag_name}`);
+
+    // Create and append the link to the GitHub Release
+    let episodeLink = document.getElementById("episodeLink");
+    if (!episodeLink) {
+      episodeLink = document.createElement("a");
+      episodeLink.id = "episodeLink";
+      episodeLink.target = "_blank";
+      episodeLink.textContent = "See episode summary and slide deck on GitHub";
+      videoPlayer.insertAdjacentElement("afterend", episodeLink);
+    }
+    episodeLink.href = video.release_url;
   }
 
   // Initialize the application
@@ -96,12 +100,17 @@ document.addEventListener("DOMContentLoaded", () => {
     if (videoTag) {
       const videoToPlay = videos.find((video) => video.tag_name === videoTag);
       if (videoToPlay) {
-        videoSource.src = videoToPlay.url;
-        videoPlayer.load();
-        videoPlayer.play().catch((error) => {
-          console.error("Error playing video:", error); // Error handling
-        });
+        loadVideo(videoToPlay);
       }
+    }
+
+    // Ensure the episode link is always present
+    if (!document.getElementById("episodeLink")) {
+      const episodeLink = document.createElement("a");
+      episodeLink.id = "episodeLink";
+      episodeLink.target = "_blank";
+      episodeLink.textContent = "See episode summary and slide deck on GitHub";
+      videoPlayer.insertAdjacentElement("afterend", episodeLink);
     }
   }
 
