@@ -76,6 +76,19 @@ document.addEventListener("DOMContentLoaded", () => {
       videoPlayer.insertAdjacentElement("afterend", episodeLink);
     }
     episodeLink.href = video.release_url;
+
+    // Remove 'playing' class from all playlist items
+    document.querySelectorAll("#playlist li").forEach((li) => {
+      li.classList.remove("playing");
+    });
+
+    // Add 'playing' class to the current playlist item
+    const currentItem = Array.from(playlist.children).find((li) =>
+      li.querySelector(`a[href="#${video.tag_name}"]`)
+    );
+    if (currentItem) {
+      currentItem.classList.add("playing");
+    }
   }
 
   // Initialize the application

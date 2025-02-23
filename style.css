@@ -93,6 +93,10 @@ video {
   background-color: var(--hover-color); /* Use variable for hover color */
 }
 
+#playlist li.playing {
+  font-weight: bold; /* Make text bold */
+}
+
 #playlist a {
   color: var(--text-color); /* Use variable for text color */
   text-decoration: none; /* Remove underline */
