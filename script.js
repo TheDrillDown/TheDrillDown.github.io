@@ -40,10 +40,14 @@ document.addEventListener("DOMContentLoaded", () => {
     playlist.innerHTML = "";
     videos.forEach((video) => {
       const li = document.createElement("li");
-      li.textContent = video.name;
-      li.addEventListener("click", () => {
+      const a = document.createElement("a");
+      a.textContent = video.name;
+      a.href = `#${video.tag_name}`;
+      a.addEventListener("click", (event) => {
+        event.preventDefault();
         loadVideo(video);
       });
+      li.appendChild(a);
       playlist.appendChild(li);
     });
   }
