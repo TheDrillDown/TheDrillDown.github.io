@@ -106,14 +106,6 @@ document.addEventListener("DOMContentLoaded", () => {
       infoBox = document.createElement("div");
       infoBox.id = "episodeInfoBox";
       videoPlayer.insertAdjacentElement("afterend", infoBox);
-
-      // Set the width to match the video player
-      infoBox.style.boxSizing = "border-box";
-      infoBox.style.border = "1px solid #ccc";
-      infoBox.style.borderRadius = "4px";
-      infoBox.style.marginTop = "10px";
-      infoBox.style.overflow = "hidden";
-      infoBox.style.maxWidth = "100%"; // Prevent exceeding parent container width
     }
 
     // Update the width to match current video player width
@@ -124,22 +116,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Create header with toggle button
     const header = document.createElement("div");
-    header.style.padding = "10px";
-    header.style.backgroundColor = "#f5f5f5";
-    header.style.cursor = "pointer";
-    header.style.display = "flex";
-    header.style.justifyContent = "space-between";
-    header.style.alignItems = "center";
+    header.className = "info-header";
 
     const title = document.createElement("h3");
     title.textContent = video.name;
-    title.style.margin = "0";
 
     const toggleButton = document.createElement("span");
     toggleButton.textContent = "▼"; // Always use the down-pointing chevron character
-    toggleButton.style.transition = "transform 0.3s ease-in-out";
-    toggleButton.style.display = "inline-block";
-    toggleButton.style.transformOrigin = "center";
+    toggleButton.className = "toggle-button";
 
     header.appendChild(title);
     header.appendChild(toggleButton);
@@ -147,10 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Create content container
     const content = document.createElement("div");
-    content.style.padding = "15px";
-    content.style.maxHeight = "0";
-    content.style.overflow = "hidden";
-    content.style.transition = "max-height 0.3s ease-out";
+    content.className = "info-content";
     infoBox.appendChild(content);
 
     // Add description using marked.js library for Markdown conversion
@@ -162,49 +143,20 @@ document.addEventListener("DOMContentLoaded", () => {
     // Create a preview container that will show the first 3 lines
     const previewContainer = document.createElement("div");
     previewContainer.className = "preview-container";
-    previewContainer.style.position = "relative";
-    previewContainer.style.maxHeight = "4.5em"; // Approximately 3 lines of text
-    previewContainer.style.overflow = "hidden";
-    previewContainer.style.paddingBottom = "2px"; // Small space at bottom to avoid cutting off text
 
     // Add gradient overlay - make it 3x stronger
     const gradientOverlay = document.createElement("div");
     gradientOverlay.className = "gradient-overlay";
-    gradientOverlay.style.position = "absolute";
-    gradientOverlay.style.bottom = "0";
-    gradientOverlay.style.left = "0";
-    gradientOverlay.style.width = "100%";
-    gradientOverlay.style.height = "3em"; // Increased height for stronger effect
-    gradientOverlay.style.background =
-      "linear-gradient(rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 40%, rgba(255,255,255,1) 100%)";
-    gradientOverlay.style.pointerEvents = "none"; // Allow clicks to pass through
 
     // Add expand button
     const expandButton = document.createElement("button");
     expandButton.textContent = "Show More";
-    expandButton.style.position = "absolute";
-    expandButton.style.bottom = "0";
-    expandButton.style.left = "50%";
-    expandButton.style.transform = "translateX(-50%)";
-    expandButton.style.padding = "4px 12px";
-    expandButton.style.backgroundColor = "#f0f0f0";
-    expandButton.style.border = "1px solid #ccc";
-    expandButton.style.borderRadius = "4px";
-    expandButton.style.cursor = "pointer";
-    expandButton.style.zIndex = "1";
-    expandButton.style.fontSize = "12px";
+    expandButton.className = "expand-button";
 
     // Create show less button for expanded state
     const showLessButton = document.createElement("button");
     showLessButton.textContent = "Show Less";
-    showLessButton.style.margin = "15px auto 0";
-    showLessButton.style.display = "block";
-    showLessButton.style.padding = "4px 12px";
-    showLessButton.style.backgroundColor = "#f0f0f0";
-    showLessButton.style.border = "1px solid #ccc";
-    showLessButton.style.borderRadius = "4px";
-    showLessButton.style.cursor = "pointer";
-    showLessButton.style.fontSize = "12px";
+    showLessButton.className = "show-less-button";
 
     // Parse markdown
     description.innerHTML = window.marked.parse(
@@ -217,13 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Add a clickable overlay to prevent clicking links in preview mode
     const clickBlocker = document.createElement("div");
-    clickBlocker.style.position = "absolute";
-    clickBlocker.style.top = "0";
-    clickBlocker.style.left = "0";
-    clickBlocker.style.width = "100%";
-    clickBlocker.style.height = "100%";
-    clickBlocker.style.zIndex = "5"; // Above content but below the show more button
-    clickBlocker.style.cursor = "default";
+    clickBlocker.className = "click-blocker";
 
     // Make only the "Show More" button clickable by forwarding click events
     clickBlocker.addEventListener("click", (e) => {
@@ -244,16 +190,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Add links - moved up before appending content to calculate correct height
     const links = document.createElement("div");
-    links.style.marginTop = "15px";
-    links.style.display = "flex";
-    links.style.gap = "10px";
-    links.style.flexWrap = "wrap";
-    links.style.justifyContent = "space-between"; // Distribute space for button layout
+    links.className = "links-container";
 
     // Left button group
     const leftButtonGroup = document.createElement("div");
-    leftButtonGroup.style.display = "flex";
-    leftButtonGroup.style.gap = "10px";
+    leftButtonGroup.className = "button-group";
 
     // Download slide deck link (on left) - look for a PDF in the assets
     const slideDeckLink = document.createElement("a");
@@ -280,11 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     slideDeckLink.textContent = "Download Slide Deck";
-    slideDeckLink.style.padding = "5px 10px";
-    slideDeckLink.style.backgroundColor = "#28a745"; // Green color
-    slideDeckLink.style.color = "white";
-    slideDeckLink.style.textDecoration = "none";
-    slideDeckLink.style.borderRadius = "4px";
+    slideDeckLink.className = "link-button slidedeck-button";
     leftButtonGroup.appendChild(slideDeckLink);
 
     // Download video link (on left)
@@ -292,11 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
     videoLink.href = video.url;
     videoLink.textContent = "Download Video";
     videoLink.download = "";
-    videoLink.style.padding = "5px 10px";
-    videoLink.style.backgroundColor = "#0366d6";
-    videoLink.style.color = "white";
-    videoLink.style.textDecoration = "none";
-    videoLink.style.borderRadius = "4px";
+    videoLink.className = "link-button video-button";
     leftButtonGroup.appendChild(videoLink);
 
     links.appendChild(leftButtonGroup);
@@ -306,12 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
     githubLink.href = video.release_url;
     githubLink.textContent = "View on GitHub";
     githubLink.target = "_blank";
-    githubLink.style.padding = "5px 10px";
-    githubLink.style.backgroundColor = "#24292e";
-    githubLink.style.color = "white";
-    githubLink.style.textDecoration = "none";
-    githubLink.style.borderRadius = "4px";
-    githubLink.style.marginLeft = "auto"; // Push to the right
+    githubLink.className = "link-button github-button";
     links.appendChild(githubLink);
 
     // Initially show preview and links - important: links are appended to content
@@ -320,74 +248,6 @@ document.addEventListener("DOMContentLoaded", () => {
     description.appendChild(showLessButton); // Add show less button to the full description
     content.appendChild(links); // Move links after both content elements
     description.style.display = "none"; // Hide full description initially
-
-    // Add GitHub markdown-like styles with reduced top margins for first elements
-    const style = document.createElement("style");
-    style.textContent = `
-      .markdown-body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-        font-size: 16px;
-        line-height: 1.5;
-        word-wrap: break-word;
-      }
-      .markdown-body > *:first-child {
-        margin-top: 0 !important;
-      }
-      .markdown-body h1, .markdown-body h2 {
-        border-bottom: 1px solid #eaecef;
-        padding-bottom: 0.3em;
-      }
-      .markdown-body h1, .markdown-body h2, .markdown-body h3, 
-      .markdown-body h4, .markdown-body h5, .markdown-body h6 {
-        margin-top: 24px;
-        margin-bottom: 16px;
-        font-weight: 600;
-        line-height: 1.25;
-      }
-      .preview-markdown > *:first-child {
-        margin-top: 0 !important;
-      }
-      .markdown-body code {
-        padding: 0.2em 0.4em;
-        margin: 0;
-        font-size: 85%;
-        background-color: rgba(27,31,35,0.05);
-        border-radius: 3px;
-        font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
-      }
-      .markdown-body pre {
-        word-wrap: normal;
-        padding: 16px;
-        overflow: auto;
-        font-size: 85%;
-        line-height: 1.45;
-        background-color: #f6f8fa;
-        border-radius: 3px;
-      }
-      .markdown-body pre code {
-        background-color: transparent;
-        padding: 0;
-      }
-      .markdown-body a {
-        color: #0366d6;
-        text-decoration: none;
-      }
-      .markdown-body a:hover {
-        text-decoration: underline;
-      }
-      .markdown-body blockquote {
-        padding: 0 1em;
-        color: #6a737d;
-        border-left: 0.25em solid #dfe2e5;
-        margin: 0 0 16px 0;
-      }
-      .markdown-body ul, .markdown-body ol {
-        padding-left: 2em;
-        margin-top: 0;
-        margin-bottom: 16px;
-      }
-    `;
-    content.appendChild(style);
 
     // Toggle functionality
     let isExpanded = false;
@@ -410,6 +270,10 @@ document.addEventListener("DOMContentLoaded", () => {
         previewContainer.style.top = "15px"; // Same as content padding
         previewContainer.style.left = "15px";
         previewContainer.style.width = "calc(100% - 30px)";
+
+        // Remove expanded classes
+        header.classList.remove("expanded");
+        content.classList.remove("content-expanded");
       }
 
       // Toggle state
@@ -425,16 +289,38 @@ document.addEventListener("DOMContentLoaded", () => {
           description.offsetHeight + links.offsetHeight + 30
         }px`; // 30px for padding
 
-        // Rotate chevron
-        toggleButton.style.transform = "rotate(180deg)";
+        // Add expanded classes
+        header.classList.add("expanded");
+        content.classList.add("content-expanded");
+
+        // Scroll to make the expanded content visible if needed
+        setTimeout(() => {
+          const infoBoxRect = infoBox.getBoundingClientRect();
+          const windowHeight = window.innerHeight;
+
+          if (infoBoxRect.bottom > windowHeight) {
+            const scrollTarget =
+              window.scrollY + (infoBoxRect.bottom - windowHeight) + 50; // 50px extra space
+            window.scrollTo({
+              top: scrollTarget,
+              behavior: "smooth",
+            });
+          }
+        }, 100);
       } else {
         // Calculate the collapsed height with both preview and links
         const previewHeight = previewContainer.offsetHeight;
         const linksHeight = links.offsetHeight;
         content.style.maxHeight = `${previewHeight + linksHeight + 30}px`; // 30px for padding
 
-        // Reset chevron rotation
-        toggleButton.style.transform = "rotate(0deg)";
+        // Scroll back to show the video if needed
+        const videoRect = videoPlayer.getBoundingClientRect();
+        if (videoRect.top < 0) {
+          window.scrollTo({
+            top: window.scrollY + videoRect.top - 20,
+            behavior: "smooth",
+          });
+        }
 
         // Wait for animation to complete, then switch display properties completely
         setTimeout(() => {
