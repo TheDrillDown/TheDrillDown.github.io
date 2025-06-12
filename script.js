@@ -215,14 +215,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (slideAsset) {
       slideDeckLink.href = slideAsset.browser_download_url;
       slideDeckLink.download = "";
-    } else {
       slideDeckLink.href = video.release_url;
       slideDeckLink.target = "_blank";
+      slideDeckLink.textContent = "Download Slide Deck";
+      slideDeckLink.className = "link-button slidedeck-button";
+      leftButtonGroup.appendChild(slideDeckLink);
     }
-
-    slideDeckLink.textContent = "Download Slide Deck";
-    slideDeckLink.className = "link-button slidedeck-button";
-    leftButtonGroup.appendChild(slideDeckLink);
 
     // Download video link (on left)
     const videoLink = document.createElement("a");
