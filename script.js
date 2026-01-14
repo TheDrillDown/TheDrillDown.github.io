@@ -66,7 +66,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Load video and update the episode info box
   function loadVideo(video) {
-    videoSource.src = video.url;
+    // Clear existing source elements
+    videoPlayer.innerHTML = "";
+
+    // Add all available video formats as source elements for fallback
+    video.urls.forEach((url) => {
+      const source = document.createElement("source");
+      source.src = url;
+
+      // Determine MIME type based on file extension
+      if (url.endsWith(".mp4")) {
+        source.type = "video/mp4";
+      } else if (url.endsWith(".webm")) {
+        source.type = "video/webm";
+      } else if (url.endsWith(".ogv")) {
+        source.type = "video/ogg";
+      } else if (url.endsWith(".mov")) {
+        source.type = "video/quicktime";
+      }
+
+      videoPlayer.appendChild(source);
+    });
+
     videoPlayer.load();
     videoPlayer.play().catch((error) => {
       console.error("Error playing video:", error); // Error handling
@@ -226,7 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Download video link (on left)
     const videoLink = document.createElement("a");
-    videoLink.href = video.url;
+    videoLink.href = video.urls[0]; // Use first video URL
     videoLink.textContent = "Download Video";
     videoLink.download = "";
     videoLink.className = "link-button video-button";
@@ -401,24 +422,35 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialize the application
   async function init() {
     const releases = await fetchReleases();
-    videos = releases.flatMap((release) =>
-      release.assets
-        // filter out non-video assets
-        .filter((asset) => asset.name.endsWith(".mp4"))
-        // map the video assets to an object with the video name, body, url, and published_at properties
-        .map((asset) => ({
+
+    // Process each release to find all video formats
+    videos = releases
+      .map((release) => {
+        // Find all video assets in this release
+        const videoAssets = release.assets.filter((asset) => {
+          const name = asset.name.toLowerCase();
+          return (
+            name.endsWith(".mp4") ||
+            name.endsWith(".webm") ||
+            name.endsWith(".ogv") ||
+            name.endsWith(".mov")
+          );
+        });
+
+        // Skip releases with no video assets
+        if (videoAssets.length === 0) return null;
+
+        // Create a video object with all available URLs
+        return {
           name: release.name,
           body: release.body,
-          url: asset.browser_download_url,
+          urls: videoAssets.map((asset) => asset.browser_download_url),
           published_at: release.published_at,
-          tag_name: release.tag_name, // Add the tag name from the release
-        }))
-        // add the html_url property from the release to the video object
-        .map((video) => {
-          video.release_url = release.html_url;
-          return video;
-        })
-    );
+          tag_name: release.tag_name,
+          release_url: release.html_url,
+        };
+      })
+      .filter((video) => video !== null); // Remove releases with no videos
     const sortedVideos = sortVideos(isAscending);
     updatePlaylist(sortedVideos);
 
