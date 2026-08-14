@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Fetch releases from GitHub API
   async function fetchReleases() {
     const response = await fetch(
-      "https://api.github.com/repos/TheDrillDown/TheDrillDown/releases"
+      "https://api.github.com/repos/TheDrillDown/TheDrillDown/releases",
     );
     const releases = await response.json();
     return releases;
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return videos.filter(
       (video) =>
         video.name.toLowerCase().includes(query.toLowerCase()) ||
-        video.body.toLowerCase().includes(query.toLowerCase())
+        video.body.toLowerCase().includes(query.toLowerCase()),
     );
   }
 
@@ -88,6 +88,15 @@ document.addEventListener("DOMContentLoaded", () => {
       videoPlayer.appendChild(source);
     });
 
+    // Listen for when the browser selects a source to update the download link
+    videoPlayer.addEventListener(
+      "loadedmetadata",
+      () => {
+        updateDownloadLink(videoPlayer.currentSrc);
+      },
+      { once: true },
+    );
+
     videoPlayer.load();
     videoPlayer.play().catch((error) => {
       console.error("Error playing video:", error); // Error handling
@@ -106,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Add 'playing' class to the current playlist item
     const currentItem = Array.from(playlist.children).find((li) =>
-      li.querySelector(`a[href="#${video.tag_name}"]`)
+      li.querySelector(`a[href="#${video.tag_name}"]`),
     );
     if (currentItem) {
       currentItem.classList.add("playing");
@@ -181,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Parse markdown
     description.innerHTML = window.marked.parse(
-      video.body || "No description available."
+      video.body || "No description available.",
     );
 
     // Fix the spacing between title and content by adjusting markdown-body styles
@@ -217,40 +226,38 @@ document.addEventListener("DOMContentLoaded", () => {
     const leftButtonGroup = document.createElement("div");
     leftButtonGroup.className = "button-group";
 
-    // Download slide deck link (on left) - look for a PDF in the assets
-    const slideDeckLink = document.createElement("a");
-    // Find a slide deck PDF in the same release (if available)
+    // Download slide deck link (on left) - look for a PDF or PPTX in the assets
+    // Find a slide deck in the same release (if available)
     const slideDeckAsset = (release) =>
       release.assets.find(
         (asset) =>
           asset.name.toLowerCase().includes("slide") &&
-          asset.name.endsWith(".pdf")
+          (asset.name.endsWith(".pdf") || asset.name.endsWith(".pptx")),
       );
 
     const allReleases = await fetchReleases();
     const currentRelease = allReleases.find(
-      (r) => r.tag_name === video.tag_name
+      (r) => r.tag_name === video.tag_name,
     );
     const slideAsset = currentRelease ? slideDeckAsset(currentRelease) : null;
 
+    // Only create and append the slide deck button if a slide deck file exists
     if (slideAsset) {
+      const slideDeckLink = document.createElement("a");
       slideDeckLink.href = slideAsset.browser_download_url;
       slideDeckLink.download = "";
-    } else {
-      slideDeckLink.href = video.release_url;
-      slideDeckLink.target = "_blank";
+      slideDeckLink.textContent = "Download Slide Deck";
+      slideDeckLink.className = "link-button slidedeck-button";
+      leftButtonGroup.appendChild(slideDeckLink);
     }
-
-    slideDeckLink.textContent = "Download Slide Deck";
-    slideDeckLink.className = "link-button slidedeck-button";
-    leftButtonGroup.appendChild(slideDeckLink);
 
     // Download video link (on left)
     const videoLink = document.createElement("a");
-    videoLink.href = video.urls[0]; // Use first video URL
+    videoLink.href = video.urls[0]; // Use first video URL as default
     videoLink.textContent = "Download Video";
     videoLink.download = "";
     videoLink.className = "link-button video-button";
+    videoLink.id = "videoDownloadLink"; // Add ID for easy reference
     leftButtonGroup.appendChild(videoLink);
 
     links.appendChild(leftButtonGroup);
@@ -383,6 +390,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 10);
   }
 
+  // Update the download link to match the currently playing video source
+  function updateDownloadLink(currentSrc) {
+    const downloadLink = document.getElementById("videoDownloadLink");
+    if (downloadLink && currentSrc) {
+      downloadLink.href = currentSrc;
+    }
+  }
+
   // Load the Marked.js library dynamically
   async function loadMarkdownLibrary() {
     if (window.marked) return; // Already loaded
@@ -496,7 +511,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (currentPlayingTag) {
       const currentItem = Array.from(playlist.children).find((li) =>
-        li.querySelector(`a[href="#${currentPlayingTag}"]`)
+        li.querySelector(`a[href="#${currentPlayingTag}"]`),
       );
       if (currentItem) {
         currentItem.classList.add("playing");
